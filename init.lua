@@ -6,6 +6,7 @@ function startup()
     return
   end
   print('in startup')
+  dofile("config.lua")
   dofile("wifi.lua")
   dofile("mqtt.lua")
   dofile("readsensor.lua")
