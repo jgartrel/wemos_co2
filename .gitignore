@@ -1,0 +1,10 @@
+# Ignore Vagrant Directories
+.vagrant/
+
+# Ignore toolchain
+esptool/
+
+# Ignore development files
+*.save*
+build-*
+nodemcu-*.bin
