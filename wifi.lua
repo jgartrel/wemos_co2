@@ -1,24 +1,28 @@
 wifi.setmode(wifi.STATION)
 wifi.sta.config(config.station_cfg)
+
+wifi.eventmon.register(wifi.eventmon.STA_CONNECTED, function(T)
+  print("\n\tSTA - CONNECTED" .. "\n\tSSID: " .. T.SSID .. "\n\tBSSID: " ..
+  T.BSSID .. "\n\tChannel: " .. T.channel)
+end)
+
+wifi.eventmon.register(wifi.eventmon.STA_DISCONNECTED, function(T)
+  print("\n\tSTA - DISCONNECTED" .. "\n\tSSID: " .. T.SSID .. "\n\tBSSID: " ..
+  T.BSSID .. "\n\treason: " .. T.reason)
+ end)
+
+wifi.eventmon.register(wifi.eventmon.STA_AUTHMODE_CHANGE, function(T)
+  print("\n\tSTA - AUTHMODE CHANGE" .. "\n\told_auth_mode: " ..
+  T.old_auth_mode .. "\n\tnew_auth_mode: " .. T.new_auth_mode)
+end)
+
+wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
+  print("\n\tSTA - GOT IP" .. "\n\tStation IP: " .. T.IP ..
+  "\n\tSubnet mask: " ..  T.netmask .. "\n\tGateway IP: " .. T.gateway)
+end)
+
+wifi.eventmon.register(wifi.eventmon.STA_DHCP_TIMEOUT, function()
+  print("\n\tSTA - DHCP TIMEOUT")
+end)
+
 wifi.sta.connect()
-tmr.delay(1000000)
-
-function wait_ip()
-    print("Waiting for IP")
-
-    local max=15
-    while(wifi.sta.getip() == nil)
-    do
-        max=max-1
-        tmr.delay(1000000)
-        print(string.format('WiFi attempt %d', max))
-        if max==0 then
-        return
-        end
-    end
-
-    print("Waited for IP")
-    print(wifi.sta.getip())
-end
-
-wait_ip()

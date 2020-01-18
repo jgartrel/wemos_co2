@@ -14,7 +14,6 @@ fields = {}
 
 uart.on("data","\r", function(data)
   if global_c~=nil then
-    global_c:publish(topic, data, 0, 0, function(client) print("sent") end)
     fields = {}
     string.gsub(data, "(%a)%s(%d+)", function (k,v)
       if parse_field[k] then
