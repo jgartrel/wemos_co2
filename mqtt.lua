@@ -19,7 +19,7 @@ m:on("overflow", function(client, topic, data)
 end)
 
 -- for TLS: m:connect("192.168.11.118", secure-port, 1)
-m:connect("172.20.10.10", 1883, 0, function(client)
+m:connect(config.mqtt.server, config.mqtt.port, 0, function(client)
   print("connected")
   global_c = client
   -- Calling subscribe/publish only makes sense once the connection

@@ -1,9 +1,9 @@
 uart.setup(0,9600,8,0,1,0)
 
-topic = "sensors"
-measurement = "environ"
-location = "PSB-2fl"
-hostname = wifi.sta.gethostname()
+topic = config.readsensor.topic
+measurement = config.readsensor.measurement
+location = config.readsensor.location
+hostname = config.readsensor.hostname
 tag_set = string.format("location=%s,sensor=%s", location, hostname)
 parse_field = {
   ["H"] = function (v) return "humidity", tonumber(v) / 100 end,
