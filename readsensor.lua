@@ -12,7 +12,7 @@ function readsensor_enable()
     ["Z"] = function (v) return "co2", tonumber(v) end,
   }
   uart.on("data","\r", function(data)
-    if global_c~=nil then
+    if global_mqtt_c~=nil then
       local fields = {}
       string.gsub(data, "(%a)%s(%d+)", function (k,v)
         if parse_field[k] then
@@ -22,7 +22,7 @@ function readsensor_enable()
       local field_set = table.concat(fields,",")
       if field_set ~= "" then
         global_wd_data = true
-        global_c:publish(topic, string.format("%s,%s %s", measurement, tag_set, field_set), 0, 0)
+        global_mqtt_c:publish(topic, string.format("%s,%s %s", measurement, tag_set, field_set), 0, 0)
       end
     else
       uart.on("data")

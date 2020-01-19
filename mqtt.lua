@@ -1,4 +1,4 @@
-global_c = nil
+global_mqtt_c = nil
 -- init mqtt client without logins, keepalive timer 120s
 m = mqtt.Client(config.mqtt.client_id, tonumber(config.mqtt.keepalive))
 
@@ -21,7 +21,7 @@ end)
 -- for TLS: m:connect("192.168.11.118", secure-port, 1)
 m:connect(config.mqtt.server, config.mqtt.port, false, function(client)
   print("connected")
-  global_c = client
+  global_mqtt_c = client
   -- Calling subscribe/publish only makes sense once the connection
   -- was successfully established. You can do that either here in the
   -- 'connect' callback or you need to otherwise make sure the

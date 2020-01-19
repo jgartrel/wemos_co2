@@ -5,8 +5,8 @@ function wd_check()
     global_wd_data = false
   else
     readsensor_disable()
-    if global_c ~= nil then
-      global_c:publish("/topic", "wd_reset_uart", 0, 0)
+    if global_mqtt_c ~= nil then
+      global_mqtt_c:publish("/topic", "wd_reset_uart", 0, 0)
     else
       dofile("mqtt.lua")
     end
