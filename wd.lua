@@ -15,7 +15,10 @@ function wd_check()
 end
 
 function wd_enable()
-  global_wd_timer = tmr.create():alarm(60000, tmr.ALARM_AUTO,wd_check)
+  global_wd_timer = tmr.create():alarm(
+    tonumber(config.wd.timeout) * 1000,
+    tmr.ALARM_AUTO,
+    wd_check)
 end
 
 function wd_disable()
