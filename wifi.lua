@@ -41,9 +41,11 @@ function wifi_enable()
   end
 
   wifi.sta.connect()
+  wifi.sta.autoconnect(1)
 end
 
 function wifi_disable()
+  wifi.sta.autoconnect(0)
   wifi.sta.disconnect()
   wifi_eventmon_disable()
   wifi.setmode(wifi.NULLMODE)
