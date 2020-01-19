@@ -9,7 +9,10 @@ function wd_check()
       global_mqtt_c:publish(config.mqtt.control_topic,
         config.mqtt.client_id .. ": wd_reset_uart", 0, 0)
     else
-      mqtt_enable()
+      if wifi.sta.getip() ~= nil then
+        mqtt_enable()
+        -- else: do nothing, no wifi connection
+      end
     end
     readsensor_enable()
   end
