@@ -7,11 +7,13 @@ function monitor()
   end
   if wifi.sta.getip() ~= nil then
     print(wifi.sta.getip())
-    wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
-    wifi.eventmon.unregister(wifi.eventmon.STA_DISCONNECTED)
-    wifi.eventmon.unregister(wifi.eventmon.STA_AUTHMODE_CHANGE)
-    wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
-    wifi.eventmon.unregister(wifi.eventmon.STA_DHCP_TIMEOUT)
+    if config.wifi.eventmon == true then
+      wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
+      wifi.eventmon.unregister(wifi.eventmon.STA_DISCONNECTED)
+      wifi.eventmon.unregister(wifi.eventmon.STA_AUTHMODE_CHANGE)
+      wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
+      wifi.eventmon.unregister(wifi.eventmon.STA_DHCP_TIMEOUT)
+    end
     dofile("mqtt.lua")
     dofile("readsensor.lua")
     return
@@ -30,8 +32,6 @@ function startup()
   dofile("config.lua")
   dofile("wifi.lua")
   tmr.create():alarm(10000, tmr.ALARM_SINGLE,monitor)
-  print("IP Address:")
-  print(wifi.sta.getip())
 end
 
 abort = false
