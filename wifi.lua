@@ -44,4 +44,7 @@ function wifi_enable()
 end
 
 function wifi_disable()
+  wifi.sta.disconnect()
+  wifi_eventmon_disable()
+  wifi.setmode(wifi.NULLMODE)
 end
