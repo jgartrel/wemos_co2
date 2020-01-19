@@ -1,5 +1,5 @@
 wifi.setmode(wifi.STATION)
-wifi.sta.config(config.station_cfg)
+wifi.sta.config(config.wifi.station_cfg)
 
 wifi.eventmon.register(wifi.eventmon.STA_CONNECTED, function(T)
   print("\n\tSTA - CONNECTED" .. "\n\tSSID: " .. T.SSID .. "\n\tBSSID: " ..
