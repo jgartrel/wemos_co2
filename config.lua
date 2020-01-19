@@ -1,6 +1,6 @@
 config = {}
 config.wifi = {}
-config.wifi.eventmon = false
+config.wifi.eventmon = true
 config.wifi.station_cfg = {}
 config.wifi.station_cfg.ssid="ssid"
 config.wifi.station_cfg.pwd="password"
