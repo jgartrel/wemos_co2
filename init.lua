@@ -9,11 +9,7 @@ function monitor()
   if wifi.sta.getip() ~= nil then
     print(wifi.sta.getip())
     if config.wifi.eventmon == true then
-      wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
-      wifi.eventmon.unregister(wifi.eventmon.STA_DISCONNECTED)
-      wifi.eventmon.unregister(wifi.eventmon.STA_AUTHMODE_CHANGE)
-      wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
-      wifi.eventmon.unregister(wifi.eventmon.STA_DHCP_TIMEOUT)
+      wifi_eventmon_disable()
     end
     mqtt_enable()
     readsensor_enable()
@@ -36,9 +32,10 @@ function startup()
   dofile("wd.lua")
   dofile("mqtt.lua")
   dofile("readsensor.lua")
+  wifi_enable()
+  wd_enable()
   -- Set a timer to wait for wifi to connect
   tmr.create():alarm(10000, tmr.ALARM_SINGLE,monitor)
-  wd_enable()
 end
 
 abort = false

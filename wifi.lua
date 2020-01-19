@@ -1,7 +1,4 @@
-wifi.setmode(wifi.STATION)
-wifi.sta.config(config.wifi.station_cfg)
-
-if config.wifi.eventmon == true then
+function wifi_eventmon_enable()
   wifi.eventmon.register(wifi.eventmon.STA_CONNECTED, function(T)
     print("\n\tSTA - CONNECTED" .. "\n\tSSID: " .. T.SSID .. "\n\tBSSID: " ..
     T.BSSID .. "\n\tChannel: " .. T.channel)
@@ -27,4 +24,24 @@ if config.wifi.eventmon == true then
   end)
 end
 
-wifi.sta.connect()
+function wifi_eventmon_disable()
+  wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
+  wifi.eventmon.unregister(wifi.eventmon.STA_DISCONNECTED)
+  wifi.eventmon.unregister(wifi.eventmon.STA_AUTHMODE_CHANGE)
+  wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
+  wifi.eventmon.unregister(wifi.eventmon.STA_DHCP_TIMEOUT)
+end
+
+function wifi_enable()
+  wifi.setmode(wifi.STATION)
+  wifi.sta.config(config.wifi.station_cfg)
+
+  if config.wifi.eventmon == true then
+    wifi_eventmon_enable()
+  end
+
+  wifi.sta.connect()
+end
+
+function wifi_disable()
+end
