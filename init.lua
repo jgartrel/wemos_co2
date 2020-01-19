@@ -15,7 +15,7 @@ function monitor()
       wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
       wifi.eventmon.unregister(wifi.eventmon.STA_DHCP_TIMEOUT)
     end
-    dofile("mqtt.lua")
+    mqtt_enable()
     readsensor_enable()
     return
   else
@@ -30,10 +30,13 @@ function startup()
     return
   end
   print('in startup')
+  -- Load required modules
   dofile("config.lua")
   dofile("wifi.lua")
   dofile("wd.lua")
+  dofile("mqtt.lua")
   dofile("readsensor.lua")
+  -- Set a timer to wait for wifi to connect
   tmr.create():alarm(10000, tmr.ALARM_SINGLE,monitor)
   wd_enable()
 end

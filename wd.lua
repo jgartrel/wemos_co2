@@ -8,7 +8,7 @@ function wd_check()
     if global_mqtt_c ~= nil then
       global_mqtt_c:publish("/topic", "wd_reset_uart", 0, 0)
     else
-      dofile("mqtt.lua")
+      mqtt_enable()
     end
     readsensor_enable()
   end
