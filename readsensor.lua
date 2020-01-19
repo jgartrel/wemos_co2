@@ -10,7 +10,6 @@ parse_field = {
   ["T"] = function (v) return "temperature", tonumber(v) / 100 end,
   ["Z"] = function (v) return "co2", tonumber(v) end,
 }
-fields = {}
 
 uart.on("data","\r", function(data)
   if global_c~=nil then
@@ -22,9 +21,14 @@ uart.on("data","\r", function(data)
     end)
     field_set = table.concat(fields,",")
     if field_set ~= "" then
+      global_wd_data = true
       global_c:publish(topic, string.format("%s,%s %s", measurement, tag_set, field_set), 0, 0)
     end
   else
     uart.on("data")
   end
 end, 0)
+
+function readsensor_disable()
+  uart.on("data")
+end

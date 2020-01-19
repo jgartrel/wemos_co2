@@ -3,6 +3,7 @@ print("Begin: init.lua, use abort=true to bypass startup")
 function monitor()
   if abort == true then
     print('monitor aborted')
+    wd_disable()
     return
   end
   if wifi.sta.getip() ~= nil then
@@ -18,7 +19,7 @@ function monitor()
     dofile("readsensor.lua")
     return
   else
-    print('monitor aborted')
+    print('monitor failed')
     return
   end
 end
@@ -31,7 +32,9 @@ function startup()
   print('in startup')
   dofile("config.lua")
   dofile("wifi.lua")
+  dofile("wd.lua")
   tmr.create():alarm(10000, tmr.ALARM_SINGLE,monitor)
+  wd_enable()
 end
 
 abort = false
