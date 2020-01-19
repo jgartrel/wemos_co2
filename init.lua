@@ -16,7 +16,7 @@ function monitor()
       wifi.eventmon.unregister(wifi.eventmon.STA_DHCP_TIMEOUT)
     end
     dofile("mqtt.lua")
-    dofile("readsensor.lua")
+    readsensor_enable()
     return
   else
     print('monitor failed')
@@ -33,6 +33,7 @@ function startup()
   dofile("config.lua")
   dofile("wifi.lua")
   dofile("wd.lua")
+  dofile("readsensor.lua")
   tmr.create():alarm(10000, tmr.ALARM_SINGLE,monitor)
   wd_enable()
 end

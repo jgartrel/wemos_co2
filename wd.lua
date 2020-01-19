@@ -10,7 +10,7 @@ function wd_check()
     else
       dofile("mqtt.lua")
     end
-    dofile("readsensor.lua")
+    readsensor_enable()
   end
 end
 
