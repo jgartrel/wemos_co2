@@ -6,7 +6,8 @@ function wd_check()
   else
     readsensor_disable()
     if global_mqtt_c ~= nil then
-      global_mqtt_c:publish("/topic", "wd_reset_uart", 0, 0)
+      global_mqtt_c:publish(config.mqtt.control_topic,
+        config.mqtt.client_id .. ": wd_reset_uart", 0, 0)
     else
       mqtt_enable()
     end

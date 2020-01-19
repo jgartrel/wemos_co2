@@ -35,9 +35,11 @@ function mqtt_enable()
     -- m:on("connect", function)).
 
     -- subscribe topic with qos = 0
-    client:subscribe(config.mqtt.control_topic, 0, function(client) print("subscribe success") end)
+    client:subscribe(config.mqtt.control_topic, 0,
+      function(client) print("subscribe success") end)
     -- publish a message with data = hello, QoS = 0, retain = 0
-    client:publish(config.mqtt.control_topic, "hello", 0, 0, function(client) print("sent") end)
+    client:publish(config.mqtt.control_topic,
+      config.mqtt.client_id .. ": hello", 0, 0)
   end,
   function(client, reason)
     print("failed reason: " .. reason)
