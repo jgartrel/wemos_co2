@@ -18,8 +18,6 @@ function mqtt_enable()
       if i == 1 then
         -- The message is destined for this client
         print(string.sub(data, j+1))
-      else
-        print("IGNORE: " .. data)
       end
     end
   end)
