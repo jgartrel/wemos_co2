@@ -7,8 +7,8 @@ function readsensor_enable()
   local hostname = config.readsensor.hostname
   local tag_set = string.format("location=%s,sensor=%s", location, hostname)
   local parse_field = {
-    ["H"] = function (v) return "humidity", tonumber(v) / 100 end,
-    ["T"] = function (v) return "temperature", tonumber(v) / 100 end,
+    ["H"] = function (v) return "humidity", tonumber(v) / 10 end,
+    ["T"] = function (v) return "temperature", (tonumber(v)-1000) / 10 end,
     ["Z"] = function (v) return "co2", tonumber(v) end,
   }
   uart.on("data","\r", function(data)
