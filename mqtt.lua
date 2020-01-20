@@ -13,9 +13,13 @@ function mqtt_enable()
 
   -- on publish message receive event
   m:on("message", function(client, topic, data)
-    print(topic .. ":" )
+    print(topic .. " RECV:" )
     if data ~= nil then
-      print(data)
+      local i,j = string.find(data, config.mqtt.client_id .. ": ", 1, true)
+      if i == 1 then
+        -- The message is destined for this client
+        print(string.sub(data, j+1))
+      end
     end
   end)
 
