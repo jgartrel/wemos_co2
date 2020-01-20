@@ -7,7 +7,7 @@ function wd_check()
     readsensor_disable()
     if global_mqtt_c ~= nil then
       global_mqtt_c:publish(config.mqtt.control_topic,
-        config.mqtt.client_id .. ": wd_reset_uart", 0, 0)
+        "FROM: " .. config.mqtt.client_id .. " wd_reset_uart", 0, 0)
     else
       if wifi.sta.getip() ~= nil then
         mqtt_enable()

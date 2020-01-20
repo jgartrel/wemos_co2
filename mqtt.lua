@@ -13,12 +13,13 @@ function mqtt_enable()
 
   -- on publish message receive event
   m:on("message", function(client, topic, data)
-    print(topic .. " RECV:" )
     if data ~= nil then
-      local i,j = string.find(data, config.mqtt.client_id .. ": ", 1, true)
+      local i,j = string.find(data, "TO: " .. config.mqtt.client_id .. " ", 1, true)
       if i == 1 then
         -- The message is destined for this client
         print(string.sub(data, j+1))
+      else
+        print("IGNORE: " .. data)
       end
     end
   end)
@@ -43,7 +44,7 @@ function mqtt_enable()
       function(client) print("subscribe success") end)
     -- publish a message with data = hello, QoS = 0, retain = 0
     client:publish(config.mqtt.control_topic,
-      config.mqtt.client_id .. ": hello", 0, 0)
+      "FROM: " .. config.mqtt.client_id .. " online", 0, 0)
   end,
   function(client, reason)
     print("failed reason: " .. reason)
