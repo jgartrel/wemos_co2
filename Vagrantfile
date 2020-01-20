@@ -19,6 +19,7 @@ Vagrant.configure("2") do |config|
     ## VendorId:           0x1a86 (1A86)
     ## ProductId:          0x7523 (7523)
     vb.customize ["modifyvm", :id, "--usbxhci", "on"]
+    vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ESP', '--vendorid', '0x1a86', '--productid', '0x7523']
   end
 
   # Execute the folling commands as 'root' user
