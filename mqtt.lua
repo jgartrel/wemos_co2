@@ -1,5 +1,12 @@
 global_mqtt_c = nil
 
+function mqtt_control_send(str)
+  if global_mqtt_c ~= nil then
+    global_mqtt_c:publish(config.mqtt.control_topic,
+      "FROM: " .. config.mqtt.client_id .. " " .. tostring(str), 0, 0)
+  end
+end
+
 function mqtt_enable()
   if global_mqtt_c ~= nil then
     mqtt_disable()
@@ -14,6 +21,11 @@ function mqtt_enable()
   -- on publish message receive event
   m:on("message", function(client, topic, data)
     if data ~= nil then
+      local i,j = string.find(data, "TO: " .. config.mqtt.client_id .. " CMD", 1, true)
+      if i == 1 then
+        -- The message is destined for this client and is a lua command
+        node.input(string.sub(data, j+1))
+      end
       local i,j = string.find(data, "TO: " .. config.mqtt.client_id .. " ", 1, true)
       if i == 1 then
         -- The message is destined for this client
@@ -21,6 +33,9 @@ function mqtt_enable()
       end
     end
   end)
+
+  -- redirect intepreter output to message control channel
+  node.output(mqtt_control_send, 0)
 
   -- on publish overflow receive event
   m:on("overflow", function(client, topic, data)
@@ -42,8 +57,7 @@ function mqtt_enable()
       function(client) print("subscribe success") end)
     -- publish a message with data = hello, QoS = 0, retain = 0
     local _, reset_reason = node.bootreason()
-    client:publish(config.mqtt.control_topic,
-      "FROM: " .. config.mqtt.client_id .. " online " .. reset_reason, 0, 0)
+    mqtt_control_send("online " .. reset_reason)
   end,
   function(client, reason)
     print("failed reason: " .. reason)
@@ -55,4 +69,5 @@ function mqtt_disable()
     global_mqtt_c:close()
     global_mqtt_c = nil
   end
+  node.output(nil)
 end
