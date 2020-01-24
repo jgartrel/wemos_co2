@@ -1,4 +1,5 @@
 global_wd_data = false
+global_wd_count = 0
 
 function wd_check()
   if global_wd_data == true then
@@ -11,7 +12,11 @@ function wd_check()
     else
       if wifi.sta.getip() ~= nil then
         mqtt_enable()
-        -- else: do nothing, no wifi connection
+      else
+        global_wd_count = global_wd_count + 1
+        if global_wd_count > config.wd.max_count then
+          node.restart()
+        end
       end
     end
     readsensor_enable()

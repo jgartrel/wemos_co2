@@ -7,6 +7,7 @@ config.wifi.station_cfg.pwd="password"
 config.wifi.station_cfg.save=true
 config.wd = {}
 config.wd.timeout = 60
+config.wd.max_count = 6
 config.readsensor = {}
 config.readsensor.topic = "sensors"
 config.readsensor.measurement = "environ"

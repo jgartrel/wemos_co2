@@ -41,8 +41,9 @@ function mqtt_enable()
     client:subscribe(config.mqtt.control_topic, 0,
       function(client) print("subscribe success") end)
     -- publish a message with data = hello, QoS = 0, retain = 0
+    local _, reset_reason = node.bootreason()
     client:publish(config.mqtt.control_topic,
-      "FROM: " .. config.mqtt.client_id .. " online", 0, 0)
+      "FROM: " .. config.mqtt.client_id .. " online " .. reset_reason, 0, 0)
   end,
   function(client, reason)
     print("failed reason: " .. reason)
