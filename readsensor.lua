@@ -21,8 +21,9 @@ function readsensor_enable()
       end)
       local field_set = table.concat(fields,",")
       if field_set ~= "" then
-        global_wd_data = true
-        global_mqtt_c:publish(topic, string.format("%s,%s %s", measurement, tag_set, field_set), 0, 0)
+        global_mqtt_c:publish(topic, string.format("%s,%s %s", measurement, tag_set, field_set), 0, 0, function(client)
+          global_wd_data = true
+        end)
       end
     else
       uart.on("data")
