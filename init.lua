@@ -12,6 +12,12 @@ function monitor()
       wifi_eventmon_disable()
     end
     mqtt_enable()
+    wifi.eventmon.register(wifi.eventmon.STA_DISCONNECTED, function(T)
+      mqtt_disable()
+    end)
+    wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
+      mqtt_enable()
+    end)
     readsensor_enable()
     return
   else

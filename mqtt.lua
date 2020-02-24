@@ -70,4 +70,5 @@ function mqtt_disable()
     global_mqtt_c = nil
   end
   node.output(nil)
+  collectgarbage()
 end
